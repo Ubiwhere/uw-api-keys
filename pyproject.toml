@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "uw-api-keys"
@@ -16,7 +16,11 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dynamic = ["dependencies"]
 
 [project.urls]
 "Homepage" = "https://github.com/Ubiwhere/uw-api-keys"
 "Bug Tracker" = "https://github.com/Ubiwhere/uw-api-keys/issues"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
