@@ -56,13 +56,13 @@ REST_FRAMEWORK = {
 python manage.py migrate uw_api_keys
 ```
 
-5. Navigate to the Django Admin page. You should see the "API Key" page ready for some machine2machine integrations.
+5. Navigate to the Django Admin page. You should see the "API Key" page ready for some machine-to-machine integrations.
 
 ## Configuration
 
 The Django API Key package offers a range of customizable configuration options. 
 These configurations can be set in your project's settings.py file by adding variables in the format `UW_API_KEYS_<VAR_NAME>=<my_value>`. 
-By overriding these defaults, you can tailor the package to your specific needs. For a complete list of configurations and their default values, refer to the [configuration file](https://github.com/Ubiwhere/uw-api-keys/src/uw_api_keys/conf.py).
+By overriding these defaults, you can tailor the package to your specific needs. For a complete list of configurations and their default values, refer to the [configuration file](https://github.com/Ubiwhere/uw-api-keys/blob/main/src/uw_api_keys/conf.py#L7).
 
 Here are a couple of relevant examples based on the provided configuration file:
 
