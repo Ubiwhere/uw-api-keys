@@ -1,0 +1,157 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-11 18:09+0100\n"
+"PO-Revision-Date: 2023-07-11 18:09+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: admin.py:22
+msgid "API Key Scope"
+msgstr "Alcances de la clave API - Dejar vacío para conceder permiso a todo"
+
+#: admin.py:24
+msgid "API Key Scopes - Leave empty for granting permission to everything"
+msgstr "API Key Scopes - Dejar vacío para conceder permiso a todo"
+
+#: admin.py:48
+msgid "Has expired"
+msgstr "Ha expirado"
+
+#: admin.py:51
+msgid "Yes"
+msgstr "Sí"
+
+#: admin.py:52
+msgid "No"
+msgstr "No"
+
+#: admin.py:61
+#, python-brace-format
+msgid ""
+"Your API key: '{key}'. Please store it somewhere safe - you will not be able "
+"to see it again."
+msgstr ""
+"Su clave API: '{key}'. Guárdala en un lugar seguro, ya que no podrás volver "
+"a verla."
+
+#: conf.py:16
+msgid "Provided API key is invalid"
+msgstr "La clave API proporcionada no es válida"
+
+#: conf.py:18
+msgid "Provided API key is valid, but has insufficient scopes"
+msgstr "La clave API proporcionada es válida, pero su alcance es insuficiente"
+
+#: conf.py:21 models.py:153
+msgid "API Keys"
+msgstr "Claves API"
+
+#: conf.py:22 models.py:152
+msgid "API Key"
+msgstr "Clave API"
+
+#: conf.py:23
+msgid "Entity"
+msgstr "Entidad"
+
+#: conf.py:24 models.py:185 models.py:197
+msgid "Operation"
+msgstr "Operación"
+
+#: conf.py:25
+msgid "Entity permission"
+msgstr "Permiso de entidad"
+
+#: conf.py:26
+msgid "Entity permissions"
+msgstr "Permisos de entidad"
+
+#: models.py:95
+msgid "API Key name"
+msgstr "Nombre de la clave API"
+
+#: models.py:99
+msgid "A name that helps you identify this key"
+msgstr "Un nombre que le ayude a identificar esta clave"
+
+#: models.py:103
+msgid "API Key prefix"
+msgstr "Prefijo de la clave API"
+
+#: models.py:109
+msgid "Public key"
+msgstr "Clave pública"
+
+#: models.py:115
+msgid "Hashed private key"
+msgstr "Clave privada codificada"
+
+#: models.py:121
+msgid "Time at which the API Key expires"
+msgstr "Hora de caducidad de la clave API"
+
+#: models.py:124
+msgid "Leave as empty for a non-expiring key."
+msgstr "Dejar vacío para una clave que no caduca."
+
+#: models.py:129
+msgid "Creation time"
+msgstr "Tiempo de creación"
+
+#: models.py:133
+msgid "When the API key was last used"
+msgstr "Cuándo se utilizó por última vez la clave API"
+
+#: models.py:140
+msgid "Scopes"
+msgstr "Visores"
+
+#: models.py:142
+msgid ""
+"The scopes that this key can access. Leave as empty to grant access to "
+"everything."
+msgstr ""
+"Los ámbitos a los que puede acceder esta clave. Déjelo vacío para conceder "
+"acceso a todo."
+
+#: models.py:179
+msgid "read"
+msgstr "leer"
+
+#: models.py:180
+msgid "create"
+msgstr "crear"
+
+#: models.py:181
+msgid "update"
+msgstr "actualizar"
+
+#: models.py:182
+msgid "delete"
+msgstr "borrar"
+
+#: models.py:198
+msgid "Operations"
+msgstr "Operaciones"
+
+#~ msgid "Revoked"
+#~ msgstr "Revocada"
+
+#~ msgid "Key start"
+#~ msgstr "Inicio de llave"
+
+#~ msgid "Key secret hash"
+#~ msgstr "Clave secreta hash"
