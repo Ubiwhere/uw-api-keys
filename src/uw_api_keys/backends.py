@@ -53,11 +53,15 @@ class APIKeyAuthentication(TokenAuthentication):
 
         # Log the usage (if configured as such)
         if uw_api_keys_settings.LOG_KEY_USAGE:
-            body = json.loads(self.request.body)
+            try:
+                body = json.loads(self.request.body)
+            except json.JSONDecodeError:
+                body = self.request.body.decode(errors="ignore")
+
             APIKeyLogEvent.objects.create(
                 api_key=key_instance,
                 endpoint=self.request.path,
-                operation=OPERATION_MAPPING[self.request.method],
+                operation=OPERATION_MAPPING[self.request.method],  # type:ignore
                 headers=dict(self.request.headers),
                 meta=dict(self.request.META),
                 body=body,
