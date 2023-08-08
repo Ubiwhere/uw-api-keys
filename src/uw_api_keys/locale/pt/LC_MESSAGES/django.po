@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-11 18:09+0100\n"
-"PO-Revision-Date: 2023-07-11 18:10+0100\n"
+"POT-Creation-Date: 2023-08-08 18:03+0100\n"
+"PO-Revision-Date: 2023-08-08 18:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt\n"
@@ -18,27 +18,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.3.2\n"
 
-#: admin.py:22
+#: uw_api_keys/admin.py:38
 msgid "API Key Scope"
 msgstr "Âmbito da chave API"
 
-#: admin.py:24
+#: uw_api_keys/admin.py:40
 msgid "API Key Scopes - Leave empty for granting permission to everything"
 msgstr "Âmbitos da chave API - Deixar em branco para conceder permissão a tudo"
 
-#: admin.py:48
+#: uw_api_keys/admin.py:64
 msgid "Has expired"
 msgstr "Já expirou"
 
-#: admin.py:51
+#: uw_api_keys/admin.py:67
 msgid "Yes"
 msgstr "Sim"
 
-#: admin.py:52
+#: uw_api_keys/admin.py:68
 msgid "No"
 msgstr "Não"
 
-#: admin.py:61
+#: uw_api_keys/admin.py:77
 #, python-brace-format
 msgid ""
 "Your API key: '{key}'. Please store it somewhere safe - you will not be able "
@@ -47,79 +47,79 @@ msgstr ""
 "A sua chave API: '{key}'. Guarde-a num local seguro - não poderá voltar a vê-"
 "la."
 
-#: conf.py:16
+#: uw_api_keys/conf.py:17
 msgid "Provided API key is invalid"
 msgstr "A chave API fornecida é inválida"
 
-#: conf.py:18
+#: uw_api_keys/conf.py:19
 msgid "Provided API key is valid, but has insufficient scopes"
 msgstr "A chave API fornecida é válida, mas tem âmbitos insuficientes"
 
-#: conf.py:21 models.py:153
+#: uw_api_keys/conf.py:22 uw_api_keys/models.py:153
 msgid "API Keys"
 msgstr "Chaves da API"
 
-#: conf.py:22 models.py:152
+#: uw_api_keys/conf.py:23 uw_api_keys/models.py:152
 msgid "API Key"
 msgstr "Chave API"
 
-#: conf.py:23
+#: uw_api_keys/conf.py:24
 msgid "Entity"
 msgstr "Entidade"
 
-#: conf.py:24 models.py:185 models.py:197
+#: uw_api_keys/conf.py:25 uw_api_keys/models.py:185 uw_api_keys/models.py:197
 msgid "Operation"
 msgstr "Operação"
 
-#: conf.py:25
+#: uw_api_keys/conf.py:26
 msgid "Entity permission"
 msgstr "Permissão de entidade"
 
-#: conf.py:26
+#: uw_api_keys/conf.py:27
 msgid "Entity permissions"
 msgstr "Permissões da entidade"
 
-#: models.py:95
+#: uw_api_keys/models.py:94
 msgid "API Key name"
 msgstr "Nome da chave API"
 
-#: models.py:99
+#: uw_api_keys/models.py:98
 msgid "A name that helps you identify this key"
 msgstr "Um nome que ajude a identificar esta chave"
 
-#: models.py:103
+#: uw_api_keys/models.py:102
 msgid "API Key prefix"
 msgstr "Prefixo da chave API"
 
-#: models.py:109
+#: uw_api_keys/models.py:108
 msgid "Public key"
 msgstr "Chave pública"
 
-#: models.py:115
+#: uw_api_keys/models.py:115
 msgid "Hashed private key"
 msgstr "Hash de chave privada"
 
-#: models.py:121
+#: uw_api_keys/models.py:121
 msgid "Time at which the API Key expires"
 msgstr "Hora em que a chave API expira"
 
-#: models.py:124
+#: uw_api_keys/models.py:124
 msgid "Leave as empty for a non-expiring key."
 msgstr "Deixar em branco para uma chave que não expira."
 
-#: models.py:129
+#: uw_api_keys/models.py:129
 msgid "Creation time"
 msgstr "Tempo de criação"
 
-#: models.py:133
+#: uw_api_keys/models.py:133
 msgid "When the API key was last used"
 msgstr "Quando é que a chave API foi utilizada pela última vez"
 
-#: models.py:140
+#: uw_api_keys/models.py:140
 msgid "Scopes"
 msgstr "Domínios"
 
-#: models.py:142
+#: uw_api_keys/models.py:142
 msgid ""
 "The scopes that this key can access. Leave as empty to grant access to "
 "everything."
@@ -127,25 +127,53 @@ msgstr ""
 "Os domínios a que esta chave pode aceder. Deixar em branco para conceder "
 "acesso a tudo."
 
-#: models.py:179
+#: uw_api_keys/models.py:179
 msgid "read"
 msgstr "ler"
 
-#: models.py:180
+#: uw_api_keys/models.py:180
 msgid "create"
 msgstr "criar"
 
-#: models.py:181
+#: uw_api_keys/models.py:181
 msgid "update"
 msgstr "atualizar"
 
-#: models.py:182
+#: uw_api_keys/models.py:182
 msgid "delete"
 msgstr "apagar"
 
-#: models.py:198
+#: uw_api_keys/models.py:198
 msgid "Operations"
 msgstr "Operações"
+
+#: uw_api_keys/models.py:243
+msgid "Endpoint"
+msgstr "Endpoint"
+
+#: uw_api_keys/models.py:258
+msgid "Request headers"
+msgstr "Cabeçalhos de pedido"
+
+#: uw_api_keys/models.py:263
+msgid "Request meta-information"
+msgstr "Meta-informação do pedido"
+
+#: uw_api_keys/models.py:268
+msgid "Request's body"
+msgstr "Corpo do pedido"
+
+#: uw_api_keys/models.py:274
+msgid "Log time"
+msgstr "Tempo do registo"
+
+#: uw_api_keys/models.py:283
+msgid "API Key Log Event"
+msgstr "Registo de uso de chave API"
+
+#: uw_api_keys/models.py:284
+msgid "API Key Log Events"
+msgstr "Registos de uso de chave API"
 
 #~ msgid "Revoked"
 #~ msgstr "Revogada"

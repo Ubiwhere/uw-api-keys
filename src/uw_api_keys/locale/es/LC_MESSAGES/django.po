@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-11 18:09+0100\n"
-"PO-Revision-Date: 2023-07-11 18:09+0100\n"
+"POT-Creation-Date: 2023-08-08 18:07+0100\n"
+"PO-Revision-Date: 2023-08-08 18:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -18,27 +18,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.3.2\n"
 
-#: admin.py:22
+#: uw_api_keys/admin.py:38
 msgid "API Key Scope"
 msgstr "Alcances de la clave API - Dejar vacío para conceder permiso a todo"
 
-#: admin.py:24
+#: uw_api_keys/admin.py:40
 msgid "API Key Scopes - Leave empty for granting permission to everything"
 msgstr "API Key Scopes - Dejar vacío para conceder permiso a todo"
 
-#: admin.py:48
+#: uw_api_keys/admin.py:64
 msgid "Has expired"
 msgstr "Ha expirado"
 
-#: admin.py:51
+#: uw_api_keys/admin.py:67
 msgid "Yes"
 msgstr "Sí"
 
-#: admin.py:52
+#: uw_api_keys/admin.py:68
 msgid "No"
 msgstr "No"
 
-#: admin.py:61
+#: uw_api_keys/admin.py:77
 #, python-brace-format
 msgid ""
 "Your API key: '{key}'. Please store it somewhere safe - you will not be able "
@@ -47,79 +47,79 @@ msgstr ""
 "Su clave API: '{key}'. Guárdala en un lugar seguro, ya que no podrás volver "
 "a verla."
 
-#: conf.py:16
+#: uw_api_keys/conf.py:17
 msgid "Provided API key is invalid"
 msgstr "La clave API proporcionada no es válida"
 
-#: conf.py:18
+#: uw_api_keys/conf.py:19
 msgid "Provided API key is valid, but has insufficient scopes"
 msgstr "La clave API proporcionada es válida, pero su alcance es insuficiente"
 
-#: conf.py:21 models.py:153
+#: uw_api_keys/conf.py:22 uw_api_keys/models.py:153
 msgid "API Keys"
 msgstr "Claves API"
 
-#: conf.py:22 models.py:152
+#: uw_api_keys/conf.py:23 uw_api_keys/models.py:152
 msgid "API Key"
 msgstr "Clave API"
 
-#: conf.py:23
+#: uw_api_keys/conf.py:24
 msgid "Entity"
 msgstr "Entidad"
 
-#: conf.py:24 models.py:185 models.py:197
+#: uw_api_keys/conf.py:25 uw_api_keys/models.py:185 uw_api_keys/models.py:197
 msgid "Operation"
 msgstr "Operación"
 
-#: conf.py:25
+#: uw_api_keys/conf.py:26
 msgid "Entity permission"
 msgstr "Permiso de entidad"
 
-#: conf.py:26
+#: uw_api_keys/conf.py:27
 msgid "Entity permissions"
 msgstr "Permisos de entidad"
 
-#: models.py:95
+#: uw_api_keys/models.py:94
 msgid "API Key name"
 msgstr "Nombre de la clave API"
 
-#: models.py:99
+#: uw_api_keys/models.py:98
 msgid "A name that helps you identify this key"
 msgstr "Un nombre que le ayude a identificar esta clave"
 
-#: models.py:103
+#: uw_api_keys/models.py:102
 msgid "API Key prefix"
 msgstr "Prefijo de la clave API"
 
-#: models.py:109
+#: uw_api_keys/models.py:108
 msgid "Public key"
 msgstr "Clave pública"
 
-#: models.py:115
+#: uw_api_keys/models.py:115
 msgid "Hashed private key"
 msgstr "Clave privada codificada"
 
-#: models.py:121
+#: uw_api_keys/models.py:121
 msgid "Time at which the API Key expires"
 msgstr "Hora de caducidad de la clave API"
 
-#: models.py:124
+#: uw_api_keys/models.py:124
 msgid "Leave as empty for a non-expiring key."
 msgstr "Dejar vacío para una clave que no caduca."
 
-#: models.py:129
+#: uw_api_keys/models.py:129
 msgid "Creation time"
 msgstr "Tiempo de creación"
 
-#: models.py:133
+#: uw_api_keys/models.py:133
 msgid "When the API key was last used"
 msgstr "Cuándo se utilizó por última vez la clave API"
 
-#: models.py:140
+#: uw_api_keys/models.py:140
 msgid "Scopes"
 msgstr "Visores"
 
-#: models.py:142
+#: uw_api_keys/models.py:142
 msgid ""
 "The scopes that this key can access. Leave as empty to grant access to "
 "everything."
@@ -127,25 +127,53 @@ msgstr ""
 "Los ámbitos a los que puede acceder esta clave. Déjelo vacío para conceder "
 "acceso a todo."
 
-#: models.py:179
+#: uw_api_keys/models.py:179
 msgid "read"
 msgstr "leer"
 
-#: models.py:180
+#: uw_api_keys/models.py:180
 msgid "create"
 msgstr "crear"
 
-#: models.py:181
+#: uw_api_keys/models.py:181
 msgid "update"
 msgstr "actualizar"
 
-#: models.py:182
+#: uw_api_keys/models.py:182
 msgid "delete"
 msgstr "borrar"
 
-#: models.py:198
+#: uw_api_keys/models.py:198
 msgid "Operations"
 msgstr "Operaciones"
+
+#: uw_api_keys/models.py:243
+msgid "Endpoint"
+msgstr "endpoint"
+
+#: uw_api_keys/models.py:258
+msgid "Request headers"
+msgstr "Cabeceras de solicitud"
+
+#: uw_api_keys/models.py:263
+msgid "Request meta-information"
+msgstr "Meta-información de la solicitud"
+
+#: uw_api_keys/models.py:268
+msgid "Request's body"
+msgstr "Cuerpo de la solicitud"
+
+#: uw_api_keys/models.py:274
+msgid "Log time"
+msgstr "Tiempo de registro"
+
+#: uw_api_keys/models.py:283
+msgid "API Key Log Event"
+msgstr "Evento de registro de clave API"
+
+#: uw_api_keys/models.py:284
+msgid "API Key Log Events"
+msgstr "Eventos de registro de claves API"
 
 #~ msgid "Revoked"
 #~ msgstr "Revocada"
