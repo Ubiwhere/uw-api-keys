@@ -33,16 +33,15 @@ INSTALLED_APPS = [
 ]
 ```
 
-3. Add the authentication backend and permission class in your `settings.py` file:
+3. Add the authentication class and permission class in your `settings.py` file:
 
 ```python
-AUTHENTICATION_BACKENDS = [
-    ...
-    'uw_api_keys.backends.APIKeyAuthentication',
-    ...
-]
+
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        "uw_api_keys.backends.APIKeyAuthentication",
+    ]
     'DEFAULT_PERMISSION_CLASSES': [
         ...
         'uw_api_keys.backends.APIKeyPermissions',
