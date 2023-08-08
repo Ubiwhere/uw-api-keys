@@ -124,6 +124,7 @@ class APIKeyPermissions(permissions.BasePermission):
         model = queryset.model
         current_operation = OPERATION_MAPPING[request.method]  # type:ignore
         api_key = self._validate_request_user(request)
+
         if not api_key:
             return False
 
@@ -140,3 +141,8 @@ class APIKeyPermissions(permissions.BasePermission):
         if not allowed:
             self.message = uw_api_keys_settings.INSUFFICIENT_SCOPES_ERROR_MSG
         return allowed
+
+    def has_object_permission(self, request, view, obj):
+        """Delegate to normal permission method, since API keys
+        do not contain object level permissions."""
+        return self.has_permission(request, view)
