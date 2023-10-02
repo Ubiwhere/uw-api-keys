@@ -11,6 +11,7 @@ class Conf(AppConf):
     KEY_PREFIX: str = "ubiwhere"
     PRIVATE_KEY_LENGTH: int = 32
     LOG_KEY_USAGE: bool = True
+    ENABLE_QUERY_PARAM_AUTH: bool = False
 
     # API settings
     AUTH_HEADER_PREFIX: str = "Api-Key"

@@ -40,6 +40,13 @@ class APIKeyAuthentication(TokenAuthentication):
         """Override to save incoming request so it can later be accessed in
         `authenticate_credentials` method."""
         self.request = request
+        # Check if API key is provided in query param
+        if uw_api_keys_settings.ENABLE_QUERY_PARAM_AUTH:
+            key = request.GET.get(uw_api_keys_settings.AUTH_HEADER_PREFIX, None)
+            if key:
+                return self.authenticate_credentials(key)
+
+        # Authenticate with Authorization header as normally
         return super().authenticate(request)
 
     def authenticate_credentials(self, key: str):

@@ -77,5 +77,11 @@ UW_API_KEYS_KEY_PREFIX = "myCompany" # This will output API keys in format: myCo
 UW_API_KEYS_LOG_KEY_USAGE = False # This will not record any key usage activity and will hide the logging model from django admin
 ```
 
+3. Enabling API key via query parameter:
+```python
+# settings.py
+UW_API_KEYS_ENABLE_QUERY_PARAM_AUTH = True # You can now pass your API key via query param with "?Api-Key=<yourKey>"
+```
+
 These are just a few examples of how you can customize the Django API Key package by overriding the configuration variables in your project's settings.py file. 
 You can explore the configuration file further to discover other options and modify them according to your requirements.
