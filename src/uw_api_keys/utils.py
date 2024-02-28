@@ -1,6 +1,17 @@
 """Module containing utility functions"""
 
+import json
+
 from django.db.models import QuerySet
+
+
+def is_jsonable(x) -> bool:
+    """Check if a variable is JSON serializable."""
+    try:
+        json.dumps(x)
+        return True
+    except (TypeError, OverflowError):
+        return False
 
 
 def get_content_type_queryset() -> QuerySet:

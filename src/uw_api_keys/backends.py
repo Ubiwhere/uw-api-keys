@@ -10,6 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 
 from .conf import uw_api_keys_settings
 from .models import APIKey, APIKeyLogEvent, APIKeyManager, OperationType
+from .utils import is_jsonable
 
 
 class APIKeyUser(AnonymousUser):
@@ -65,12 +66,25 @@ class APIKeyAuthentication(TokenAuthentication):
             except json.JSONDecodeError:
                 body = self.request.body.decode(errors="ignore")
 
+            # Only keep request.META values that are json serializable
+            meta = {
+                key: value
+                for key, value in self.request.META.items()
+                if is_jsonable(value)
+            }
+            # Same for headers
+            headers = {
+                key: value
+                for key, value in self.request.headers.items()
+                if is_jsonable(value)
+            }
+
             APIKeyLogEvent.objects.create(
                 api_key=key_instance,
                 endpoint=self.request.path,
                 operation=OPERATION_MAPPING[self.request.method],  # type:ignore
-                headers=dict(self.request.headers),
-                meta=dict(self.request.META),
+                headers=headers,
+                meta=meta,
                 body=body,
             )
 

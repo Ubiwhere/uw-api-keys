@@ -53,8 +53,8 @@ class Conf(AppConf):
         return value
 
     def configure_content_type_label_from_instance_fn(self, value: str):
-        """Validate that the configured `CONTENT_TYPE_LABEL_FROM_INSTANCE_FN` points to a valid
-        callable."""
+        """Validate that the configured `CONTENT_TYPE_LABEL_FROM_INSTANCE_FN`
+        points to a valid callable."""
         self._validate_callable(value)
         return value
 
