@@ -59,6 +59,15 @@ class APIKeyAuthentication(TokenAuthentication):
                 uw_api_keys_settings.INVALID_API_KEY_ERROR_MSG
             )
 
+        # Check for valid web origins if key defines them
+        if key_instance.web_origins and (
+            (origin := self.request.META.get("HTTP_ORIGIN"))
+            not in key_instance.web_origins
+        ):
+            raise exceptions.AuthenticationFailed(
+                uw_api_keys_settings.INVALID_ORIGIN_ERROR_MSG % origin
+            )
+
         # Log the usage (if configured as such)
         if uw_api_keys_settings.LOG_KEY_USAGE:
             try:

@@ -1,4 +1,5 @@
 """Module containing custom django-admin forms."""
+
 from django import forms
 from django.utils.module_loading import import_string
 

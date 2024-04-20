@@ -144,9 +144,31 @@ class APIKey(models.Model):
         ),
     )
 
+    # Optional valid origins
+    valid_origins = models.TextField(
+        verbose_name=_("Valid web origins"),
+        null=True,
+        blank=True,
+        help_text=_(
+            "A list of valid web origins for this key. Leave empty to allow all. "
+            "Provide one per-line separated by commas.<br/> <b>Example:</b> <br/>"
+            "http://localhost:5000,<br/>"
+            "https://mydomain.com"
+        ),
+    )
+
     def __str__(self) -> str:
         key_hash_str = "*" * 5
         return f"{self.name} - {self.prefix}{KEY_PART_DELIMITER}{self.public_key}{KEY_PART_DELIMITER}{key_hash_str}"
+
+    @property
+    def web_origins(self) -> list[str] | None:
+        """Return the parsed allowed origins"""
+        return (
+            [s.strip() for s in self.valid_origins.split(",")]
+            if self.valid_origins
+            else None
+        )
 
     class Meta:
         verbose_name = _("API Key")

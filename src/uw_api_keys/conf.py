@@ -19,6 +19,9 @@ class Conf(AppConf):
     INSUFFICIENT_SCOPES_ERROR_MSG: str = _(
         "Provided API key is valid, but has insufficient scopes"
     )
+    INVALID_ORIGIN_ERROR_MSG: str = _(
+        "Provided API key is valid, but origin '%s' is not."
+    )
     # Labelling
     APP_VERBOSE_NAME: str = _("API Keys")
     API_KEY_FK_VERBOSE_NAME: str = _("API Key")

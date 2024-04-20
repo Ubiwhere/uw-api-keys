@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-08 18:03+0100\n"
-"PO-Revision-Date: 2023-08-08 18:06+0100\n"
+"POT-Creation-Date: 2024-04-20 15:54+0100\n"
+"PO-Revision-Date: 2024-04-20 15:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: uw_api_keys/admin.py:38
 msgid "API Key Scope"
@@ -47,35 +47,40 @@ msgstr ""
 "A sua chave API: '{key}'. Guarde-a num local seguro - não poderá voltar a vê-"
 "la."
 
-#: uw_api_keys/conf.py:17
+#: uw_api_keys/conf.py:18
 msgid "Provided API key is invalid"
 msgstr "A chave API fornecida é inválida"
 
-#: uw_api_keys/conf.py:19
+#: uw_api_keys/conf.py:20
 msgid "Provided API key is valid, but has insufficient scopes"
 msgstr "A chave API fornecida é válida, mas tem âmbitos insuficientes"
 
-#: uw_api_keys/conf.py:22 uw_api_keys/models.py:153
+#: uw_api_keys/conf.py:23
+#, python-format
+msgid "Provided API key is valid, but origin '%s' is not."
+msgstr "A chave API fornecida é válida, mas a origem \"%s\" não é."
+
+#: uw_api_keys/conf.py:26 uw_api_keys/models.py:175
 msgid "API Keys"
 msgstr "Chaves da API"
 
-#: uw_api_keys/conf.py:23 uw_api_keys/models.py:152
+#: uw_api_keys/conf.py:27 uw_api_keys/models.py:174
 msgid "API Key"
 msgstr "Chave API"
 
-#: uw_api_keys/conf.py:24
+#: uw_api_keys/conf.py:28
 msgid "Entity"
 msgstr "Entidade"
 
-#: uw_api_keys/conf.py:25 uw_api_keys/models.py:185 uw_api_keys/models.py:197
+#: uw_api_keys/conf.py:29 uw_api_keys/models.py:207 uw_api_keys/models.py:219
 msgid "Operation"
 msgstr "Operação"
 
-#: uw_api_keys/conf.py:26
+#: uw_api_keys/conf.py:30
 msgid "Entity permission"
 msgstr "Permissão de entidade"
 
-#: uw_api_keys/conf.py:27
+#: uw_api_keys/conf.py:31
 msgid "Entity permissions"
 msgstr "Permissões da entidade"
 
@@ -127,51 +132,65 @@ msgstr ""
 "Os domínios a que esta chave pode aceder. Deixar em branco para conceder "
 "acesso a tudo."
 
-#: uw_api_keys/models.py:179
+#: uw_api_keys/models.py:149
+msgid "Valid web origins"
+msgstr "Origens Web válidas"
+
+#: uw_api_keys/models.py:153
+msgid ""
+"A list of valid web origins for this key. Leave empty to allow all. Provide "
+"one per-line separated by commas.<br/> <b>Example:</b> <br/>http://"
+"localhost:5000,<br/>https://mydomain.com"
+msgstr ""
+"Uma lista de origens web válidas para esta chave. Deixe vazio para permitir "
+"todas. Forneça uma por linha separadas por vírgulas.<br/> <b>Exemplo:</b> "
+"<br/>http://localhost:5000,<br/>https://meudominio.com"
+
+#: uw_api_keys/models.py:201
 msgid "read"
 msgstr "ler"
 
-#: uw_api_keys/models.py:180
+#: uw_api_keys/models.py:202
 msgid "create"
 msgstr "criar"
 
-#: uw_api_keys/models.py:181
+#: uw_api_keys/models.py:203
 msgid "update"
 msgstr "atualizar"
 
-#: uw_api_keys/models.py:182
+#: uw_api_keys/models.py:204
 msgid "delete"
 msgstr "apagar"
 
-#: uw_api_keys/models.py:198
+#: uw_api_keys/models.py:220
 msgid "Operations"
 msgstr "Operações"
 
-#: uw_api_keys/models.py:243
+#: uw_api_keys/models.py:265
 msgid "Endpoint"
 msgstr "Endpoint"
 
-#: uw_api_keys/models.py:258
+#: uw_api_keys/models.py:280
 msgid "Request headers"
 msgstr "Cabeçalhos de pedido"
 
-#: uw_api_keys/models.py:263
+#: uw_api_keys/models.py:285
 msgid "Request meta-information"
 msgstr "Meta-informação do pedido"
 
-#: uw_api_keys/models.py:268
+#: uw_api_keys/models.py:290
 msgid "Request's body"
 msgstr "Corpo do pedido"
 
-#: uw_api_keys/models.py:274
+#: uw_api_keys/models.py:296
 msgid "Log time"
 msgstr "Tempo do registo"
 
-#: uw_api_keys/models.py:283
+#: uw_api_keys/models.py:305
 msgid "API Key Log Event"
 msgstr "Registo de uso de chave API"
 
-#: uw_api_keys/models.py:284
+#: uw_api_keys/models.py:306
 msgid "API Key Log Events"
 msgstr "Registos de uso de chave API"
 

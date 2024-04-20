@@ -1,6 +1,7 @@
 """Conditionally registers the `APIKey` model
 into django-admin."""
 
+import copy
 import json
 from typing import Any, Sequence
 
@@ -81,15 +82,16 @@ class APIKeyAdmin(admin.ModelAdmin):
         messages.add_message(request, messages.WARNING, message)
         return obj
 
-    def has_change_permission(
+    def get_readonly_fields(
         self,
         request: HttpRequest,
         obj: Any | None = None,
-    ) -> bool:
-        """After an API key is created it cannot be edited."""
+    ) -> list[str] | tuple[Any, ...]:
+        """If object already exists, make some fields read-only."""
+        readonly_fields: list = super().get_readonly_fields(request, obj)  # type: ignore
         if obj:
-            return False
-        return super().has_change_permission(request, obj)
+            return copy.deepcopy(readonly_fields) + ["name", "last_seen"]
+        return readonly_fields
 
     def get_fields(self, request: HttpRequest, obj: Any | None) -> Sequence:
         """When first creating the key remove the `last_seen` field."""
@@ -121,16 +123,19 @@ class APIKeyLogEventAdmin(admin.ModelAdmin):
     def _pretty_headers(self, obj: APIKeyLogEvent) -> str | None:
         if obj.headers:
             return pretiffy_json_for_admin(obj.headers)
+        return None
 
     @admin.display(description=APIKeyLogEvent._meta.get_field("meta").verbose_name)
     def _pretty_meta(self, obj: APIKeyLogEvent) -> str | None:
         if obj.meta:
             return pretiffy_json_for_admin(obj.meta)
+        return None
 
     @admin.display(description=APIKeyLogEvent._meta.get_field("body").verbose_name)
     def _pretty_body(self, obj: APIKeyLogEvent) -> str | None:
         if obj.body:
             return pretiffy_json_for_admin(obj.body)
+        return None
 
 
 # Perform conditional registering
