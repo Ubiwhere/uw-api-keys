@@ -69,7 +69,7 @@ class APIKeyAuthentication(TokenAuthentication):
             )
 
         # Log the usage (if configured as such)
-        if uw_api_keys_settings.LOG_KEY_USAGE:
+        if key_instance.should_log_usage:
             try:
                 body = json.loads(self.request.body)
             except json.JSONDecodeError:

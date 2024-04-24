@@ -7,6 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils import timezone
 from django.utils.crypto import get_random_string
+from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
 from .conf import uw_api_keys_settings
@@ -157,6 +158,22 @@ class APIKey(models.Model):
         ),
     )
 
+    # Option to disable usage logging
+    # on a per-key basis
+    log_usage = models.BooleanField(
+        verbose_name=_("Log usage"),
+        default=None,
+        null=True,
+        help_text=format_lazy(
+            _(
+                "Whether to log usage of this key. This overrides the global setting ({enabled})."
+            ),
+            enabled=(
+                _("Enabled") if uw_api_keys_settings.LOG_KEY_USAGE else _("Not enabled")
+            ),
+        ),
+    )
+
     def __str__(self) -> str:
         key_hash_str = "*" * 5
         return f"{self.name} - {self.prefix}{KEY_PART_DELIMITER}{self.public_key}{KEY_PART_DELIMITER}{key_hash_str}"
@@ -169,6 +186,15 @@ class APIKey(models.Model):
             if self.valid_origins
             else None
         )
+
+    @property
+    def should_log_usage(self) -> bool:
+        """Checks if api key usage should be logged. If
+        `log_usage` is None, defaults to the global setting `LOG_KEY_USAGE`."""
+        if self.log_usage is not None:
+            return self.log_usage
+
+        return uw_api_keys_settings.LOG_KEY_USAGE
 
     class Meta:
         verbose_name = _("API Key")
