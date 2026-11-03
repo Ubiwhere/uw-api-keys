@@ -14,6 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from .conf import uw_api_keys_settings
 from .forms import APIKeyScopeForm
 from .models import APIKey, APIKeyLogEvent, KeyContainer
+from .paginators import EstimatedCountPaginator
 
 
 def pretiffy_json_for_admin(field: JSONField) -> str:
@@ -104,9 +105,13 @@ class APIKeyAdmin(admin.ModelAdmin):
 class APIKeyLogEventAdmin(admin.ModelAdmin):
     """Registers the `APIKeyLogEvent` into django admin."""
 
-    search_fields = ["api_key"]
+    search_fields = ["api_key__name", "endpoint"]
     list_display = ["api_key", "endpoint", "created_at"]
-    list_filter = ["api_key__public_key"]
+    list_filter = ["api_key"]
+    list_select_related = ["api_key"]
+    show_full_result_count = False
+    paginator = EstimatedCountPaginator
+    ordering = ["-id"]
     # Exclude JSON fields to include a custom prettified version
     exclude = ["headers", "meta", "body"]
     readonly_fields = ["_pretty_headers", "_pretty_meta", "_pretty_body"]

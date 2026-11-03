@@ -1,8 +1,11 @@
+import hashlib
 from dataclasses import dataclass
+from datetime import timedelta
 from typing import Optional
 
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.contenttypes.models import ContentType
+from django.core.cache import caches
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils import timezone
@@ -13,6 +16,11 @@ from django.utils.translation import gettext_lazy as _
 from .conf import uw_api_keys_settings
 
 KEY_PART_DELIMITER = "_"
+_CACHE_KEY_TEMPLATE = "uw_api_keys:v1:{digest}"
+
+
+def _validation_cache_key(key: str) -> str:
+    return _CACHE_KEY_TEMPLATE.format(digest=hashlib.sha256(key.encode()).hexdigest())
 
 
 @dataclass
@@ -67,6 +75,11 @@ class APIKeyManager(models.Manager):
         except ValueError:
             return None
 
+        cached = self._get_cached(key, prefix_key, public_key)
+        if cached is not None:
+            cached.update_last_seen()
+            return cached
+
         try:
             api_key: APIKey = APIKey.objects.get(
                 prefix=prefix_key, public_key=public_key
@@ -80,9 +93,43 @@ class APIKeyManager(models.Manager):
         # We got the key by prefix and public key but we need to validate that the
         # private key matches the stored hashed version
         if api_key.is_valid(private_key):
+            self._set_cached(key, api_key)
             api_key.update_last_seen()
             return api_key
         return None
+
+    @staticmethod
+    def _get_cached(key: str, prefix: str, public_key: str) -> Optional["APIKey"]:
+        """Returns the `APIKey` for a previously validated `key`, only if the stored
+        row still matches what was validated (so rotation/deletion self-invalidate)."""
+        if uw_api_keys_settings.VALIDATION_CACHE_TIMEOUT <= 0:
+            return None
+        cache = caches[uw_api_keys_settings.VALIDATION_CACHE_ALIAS]
+        cache_key = _validation_cache_key(key)
+        entry = cache.get(cache_key)
+        if not entry:
+            return None
+        api_key = APIKey.objects.filter(pk=entry["pk"]).first()
+        if (
+            api_key is None
+            or (api_key.prefix, api_key.public_key, api_key.hashed_key)
+            != (prefix, public_key, entry["hashed_key"])
+            or api_key.expired
+        ):
+            cache.delete(cache_key)
+            return None
+        return api_key
+
+    @staticmethod
+    def _set_cached(key: str, api_key: "APIKey") -> None:
+        timeout = uw_api_keys_settings.VALIDATION_CACHE_TIMEOUT
+        if timeout <= 0:
+            return
+        caches[uw_api_keys_settings.VALIDATION_CACHE_ALIAS].set(
+            _validation_cache_key(key),
+            {"pk": api_key.pk, "hashed_key": api_key.hashed_key},
+            timeout,
+        )
 
 
 class APIKey(models.Model):
@@ -210,9 +257,31 @@ class APIKey(models.Model):
         return self.expires_at < timezone.now()
 
     def update_last_seen(self) -> None:
-        """Updates the `last_seen` field to the current time."""
-        self.last_seen = timezone.now()
-        self.save(update_fields=["last_seen"])
+        """Updates the `last_seen` field to the current time, at most once per
+        `LAST_SEEN_UPDATE_INTERVAL` seconds."""
+        now = timezone.now()
+        interval = uw_api_keys_settings.LAST_SEEN_UPDATE_INTERVAL
+        if (
+            interval > 0
+            and self.last_seen is not None
+            and now - self.last_seen < timedelta(seconds=interval)
+        ):
+            return
+        APIKey.objects.filter(pk=self.pk).update(last_seen=now)
+        self.last_seen = now
+
+    def scope_grants(self) -> frozenset[tuple[int, str | None]]:
+        """Returns `(content_type_id, operation name)` pairs for this key's scopes,
+        fetched with one query and memoised on the instance. A scope without
+        operations yields `(content_type_id, None)`: the key is scoped but grants
+        nothing."""
+        if not hasattr(self, "_scope_grants"):
+            self._scope_grants = frozenset(
+                APIKeyScope.objects.filter(api_key=self).values_list(
+                    "content_type_id", "operations__name"
+                )
+            )
+        return self._scope_grants
 
     def is_valid(self, private_key: str) -> bool:
         """Given a private key it checks if it is valid

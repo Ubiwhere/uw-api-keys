@@ -1,0 +1,8 @@
+import pytest
+from django.core.management import call_command
+
+pytestmark = pytest.mark.django_db
+
+
+def test_should_have_no_pending_migrations():
+    call_command("makemigrations", "--check", "--dry-run", verbosity=0)

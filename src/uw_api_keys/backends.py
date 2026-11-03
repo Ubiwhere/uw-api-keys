@@ -10,7 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 
 from .conf import uw_api_keys_settings
 from .models import APIKey, APIKeyLogEvent, APIKeyManager, OperationType
-from .utils import is_jsonable
+from .utils import is_jsonable, redact_headers, redact_meta
 
 
 class APIKeyUser(AnonymousUser):
@@ -75,18 +75,28 @@ class APIKeyAuthentication(TokenAuthentication):
             except json.JSONDecodeError:
                 body = self.request.body.decode(errors="ignore")
 
+            redacted = uw_api_keys_settings.LOG_REDACTED_HEADERS
             # Only keep request.META values that are json serializable
-            meta = {
-                key: value
-                for key, value in self.request.META.items()
-                if is_jsonable(value)
-            }
+            meta = None
+            if uw_api_keys_settings.LOG_REQUEST_META:
+                meta = redact_meta(
+                    {
+                        key: value
+                        for key, value in self.request.META.items()
+                        if is_jsonable(value)
+                    },
+                    redacted,
+                    uw_api_keys_settings.AUTH_HEADER_PREFIX,
+                )
             # Same for headers
-            headers = {
-                key: value
-                for key, value in self.request.headers.items()
-                if is_jsonable(value)
-            }
+            headers = redact_headers(
+                {
+                    key: value
+                    for key, value in self.request.headers.items()
+                    if is_jsonable(value)
+                },
+                redacted,
+            )
 
             APIKeyLogEvent.objects.create(
                 api_key=key_instance,
@@ -135,9 +145,7 @@ class APIKeyPermissions(permissions.BasePermission):
         ), (
             "Cannot apply {} on a view that does not set "
             "`.queryset` or have a `.get_queryset()` method."
-        ).format(
-            self.__class__.__name__
-        )
+        ).format(self.__class__.__name__)
 
         if hasattr(view, "get_queryset"):
             queryset = view.get_queryset()
@@ -160,14 +168,12 @@ class APIKeyPermissions(permissions.BasePermission):
 
         # Check if key contains the required scope based on the current operation
         # and model
-        if api_key.scopes.count() == 0:
+        grants = api_key.scope_grants()
+        if not grants:
             return True
 
-        scopes = api_key.scopes.filter(
-            apikeyscope__operations__name=current_operation,
-            apikeyscope__content_type=ContentType.objects.get_for_model(model),
-        )
-        allowed = scopes.exists()
+        content_type_id = ContentType.objects.get_for_model(model).pk
+        allowed = (content_type_id, current_operation) in grants
         if not allowed:
             self.message = uw_api_keys_settings.INSUFFICIENT_SCOPES_ERROR_MSG
         return allowed

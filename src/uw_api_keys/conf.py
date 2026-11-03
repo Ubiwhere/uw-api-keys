@@ -13,6 +13,20 @@ class Conf(AppConf):
     LOG_KEY_USAGE: bool = True
     ENABLE_QUERY_PARAM_AUTH: bool = False
 
+    # Performance settings
+    VALIDATION_CACHE_TIMEOUT: int = 60
+    VALIDATION_CACHE_ALIAS: str = "default"
+    LAST_SEEN_UPDATE_INTERVAL: int = 300
+
+    # Usage log settings
+    LOG_REDACTED_HEADERS: tuple[str, ...] = (
+        "Authorization",
+        "Proxy-Authorization",
+        "Cookie",
+    )
+    LOG_REQUEST_META: bool = True
+    LOG_RETENTION_DAYS: int | None = None
+
     # API settings
     AUTH_HEADER_PREFIX: str = "Api-Key"
     INVALID_API_KEY_ERROR_MSG: str = _("Provided API key is invalid")
